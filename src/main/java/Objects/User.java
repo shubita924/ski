@@ -1,15 +1,41 @@
 package Objects;
 
-import java.time.Instant;
+
+import java.sql.Timestamp;
 
 public class User {
     private long id;
-    private String fullName;
     private String email;
-    private String phone;
-    private Role role;
+    private String fullName;
+    private String salt;
     private String passwordHash;
-    private Instant createdAt;
+    private String role;
+    private Timestamp createdAt;
+    private String phone;
+
+
+    // Constructor for inserting
+    public User(String email, String fullName, String salt, String passwordHash, String role, String phone) {
+        this.email = email;
+        this.fullName = fullName;
+        this.salt = salt;
+        this.passwordHash = passwordHash;
+        this.role = role;
+        this.phone = phone;
+    }
+
+    // Constructor for fetching from DB
+    public User(int id, String email, String fullName, String salt, String passwordHash,
+                String role, Timestamp createdAt, String phone) {
+        this.id = id;
+        this.email = email;
+        this.fullName = fullName;
+        this.salt = salt;
+        this.passwordHash = passwordHash;
+        this.role = role;
+        this.createdAt = createdAt;
+        this.phone = phone;
+    }
 
     public long getId() {
         return id;
@@ -39,11 +65,18 @@ public class User {
         this.phone = phone;
     }
 
-    public Role getRole() {
+    public String getRole() {
         return role;
     }
-    public void setRole(Role role) {
+    public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     public String getPasswordHash() {
@@ -53,10 +86,10 @@ public class User {
         this.passwordHash = passwordHash;
     }
 
-    public Instant getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
-    public void setCreatedAt(Instant createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
 }
