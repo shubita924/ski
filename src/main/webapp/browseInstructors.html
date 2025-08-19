@@ -2,9 +2,85 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>browse inst</title>
+    <title>Browse Instructors</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            width: 250px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            transition: transform 0.2s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #222;
+        }
+        .email {
+            font-size: 14px;
+            color: #666;
+        }
+        .no-data {
+            text-align: center;
+            color: #888;
+            font-style: italic;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-<h1>browsee</h1>
+<h1>Instructors</h1>
+<div class="container" id="instructorList"></div>
+
+<script>
+    async function loadInstructors() {
+        try {
+            const response = await fetch("BrowseInstructors");
+            const instructors = await response.json();
+
+            const list = document.getElementById("instructorList");
+            list.innerHTML = "";
+
+            if (instructors.length === 0) {
+                list.innerHTML = "<p class='no-data'>No instructors found.</p>";
+            } else {
+                instructors.forEach(inst => {
+                    const card = document.createElement("div");
+                    card.className = "card";
+                    card.innerHTML = `
+                        <div class="name">${inst.fullname}</div>
+                        <div class="email">${inst.email}</div>
+                    `;
+                    list.appendChild(card);
+                });
+            }
+        } catch (err) {
+            console.error("Error loading instructors:", err);
+        }
+    }
+
+    // load on page load
+    window.onload = loadInstructors;
+</script>
 </body>
 </html>

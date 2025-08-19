@@ -2,22 +2,50 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>reg instructor</title>
+    <title>Register Instructor</title>
 </head>
 <body>
 
 <main>
+    <h2>Instructor Registration</h2>
 
-    <br>
-    <br>
-    <form id="registerForm" action="/registerInstructor" method="post">
-        <div id="registerError" class="text-danger mb-3"></div>
-        Email: <input type="text" name="email" required>
-        <br><br>
-        Password: <input type="password" name="password" required>
-        <br><br>
-        <button id="button" type="submit" name="register">Register as instructor</button>
+    <form id="registerForm">
+        <div id="registerError" style="color:red;"></div>
+        Email: <input type="text" name="email" required><br><br>
+        Password: <input type="password" name="password" required><br><br>
+        Fullname: <input type="text" name="fullname" required><br><br>
+        Role:
+        <select name="role" required>
+            <option value="Instructor" selected>Instructor</option>
+            <option value="Student">Student</option>
+        </select><br><br>
+        Phone: <input type="text" name="phone" required><br><br>
+        <button type="submit">Register</button>
     </form>
+
+    <script>
+        document.getElementById("registerForm").addEventListener("submit", async function (e) {
+            e.preventDefault(); // don’t reload
+
+            const formData = new FormData(this);
+            const body = new URLSearchParams(formData);
+            const res = await fetch("/registerInstructor", {
+                method: "POST",
+                body: body
+            });
+
+            const errorDiv = document.getElementById("registerError");
+
+            if (res.status === 201) {
+                const data = await res.json();
+                window.location.href = data.redirect; // Redirect to profile page
+            } else {
+                const data = await res.json();
+                errorDiv.style.color = "red";
+                errorDiv.textContent = data.error || "Something went wrong.";
+            }
+        });
+    </script>
 
 </main>
 

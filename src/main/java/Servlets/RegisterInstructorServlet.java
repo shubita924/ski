@@ -2,6 +2,7 @@ package Servlets;
 
 import Databases.UsersDAO;
 import Objects.User;
+import utils.PasswordHasher;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -27,29 +28,44 @@ public class RegisterInstructorServlet extends HttpServlet {
     }
 
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response){
-
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-
+        String fullname = request.getParameter("fullname");
+        String role = request.getParameter("role"); // "Instructor" or "Student"
+        String phone = request.getParameter("phone");
 
         ServletContext context = getServletContext();
-
         UsersDAO dao = (UsersDAO) context.getAttribute("usersDAO");
 
-        User newUser = new User("newuser@gmail.com", "New User", "salt123", "hashedpass", "Student", "555-1234");
+        // Check if user already exists
+        User existingUser = dao.getUserByEmail(email);
+        if (existingUser != null) {
+            response.setContentType("application/json");
+            response.setStatus(HttpServletResponse.SC_CONFLICT); // 409
+            response.getWriter().write("{\"error\":\"User with this email already exists.\"}");
+            return;
+        }
+
+
+        // Hash password
+        PasswordHasher hasher = new PasswordHasher();
+        String salt = hasher.generateSalt();
+        String hashedPassword = hasher.hashPassword(password, salt);
+
+
+        // Create new user
+        User newUser = new User(email, fullname, salt, hashedPassword, role, phone);
+
         dao.addUser(newUser);
 
-        // Get by email
-//        User user = dao.getUserByEmail("newuser@gmail.com");
-//        if (user != null) {
-//            System.out.println("Found user: " + user.getFullname());
-//        }
+        // Respond success
+        response.setStatus(HttpServletResponse.SC_CREATED);
+        response.setContentType("application/json");
+        response.getWriter().write("{\"redirect\":\"/InstructorProfilePage.html\"}");
 
-        // Get all users
-        for (User u : dao.getAllUsers()) {
-            System.out.println(u.getId() + " " + u.getEmail() + " " + u.getRole());
-        }
     }
+
 
 }

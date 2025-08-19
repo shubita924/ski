@@ -41,31 +41,31 @@ public class UsersDAO {
     }
 
     // Get user by email
-//    public User getUserByEmail(String email) {
-//        String sql = "SELECT * FROM users WHERE email = ?";
-//        try (Connection conn = getConnection();
-//             PreparedStatement stmt = conn.prepareStatement(sql)) {
-//
-//            stmt.setString(1, email);
-//            ResultSet rs = stmt.executeQuery();
-//
-//            if (rs.next()) {
-//                return new User(
-//                        rs.getInt("id"),
-//                        rs.getString("email"),
-//                        rs.getString("fullname"),
-//                        rs.getString("salt"),
-//                        rs.getString("passwordhash"),
-//                        rs.getString("role"),
-//                        rs.getTimestamp("createdat"),
-//                        rs.getString("phone")
-//                );
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return null; // not found
-//    }
+    public User getUserByEmail(String email) {
+        String sql = "SELECT * FROM users WHERE email = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return new User(
+                        rs.getInt("id"),
+                        rs.getString("email"),
+                        rs.getString("fullname"),
+                        rs.getString("salt"),
+                        rs.getString("passwordhash"),
+                        rs.getString("role"),
+                        rs.getTimestamp("createdat"),
+                        rs.getString("phone")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // not found
+    }
 
     // Get all users
     public List<User> getAllUsers() {
@@ -93,4 +93,33 @@ public class UsersDAO {
         }
         return users;
     }
+
+    public List<User> getAllInstructors() {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM users WHERE role = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, "Instructor"); // only instructors
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    users.add(new User(
+                            rs.getInt("id"),
+                            rs.getString("email"),
+                            rs.getString("fullname"),
+                            rs.getString("salt"),
+                            rs.getString("passwordhash"),
+                            rs.getString("role"),
+                            rs.getTimestamp("createdat"),
+                            rs.getString("phone")
+                    ));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
 }
