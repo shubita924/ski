@@ -1,0 +1,103 @@
+/* General page setup */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #f0f8ff, #e6f2ff);
+    color: #333;
+}
+
+/* Header */
+header {
+    text-align: center;
+    padding: 10px 5px;   /* smaller header */
+    background: #003366;
+    color: white;
+}
+
+header h1 {
+    font-size: 1.8rem;   /* smaller text */
+    margin-bottom: 6px;
+}
+
+header p {
+    font-size: 1rem;
+    font-weight: 300;
+}
+
+/* Main layout: image left, cards right */
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    gap: 40px;
+    flex-wrap: wrap; /* stack on small screens */
+}
+
+/* Left image */
+.image-container {
+    flex: 1;
+    max-width: 500px;
+}
+
+.image-container img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Right card stack */
+.card-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    max-width: 400px;
+}
+
+/* Card sections */
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.card h2 {
+    color: #003366;
+    margin-bottom: 12px;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 12px 20px;
+    background: #0066cc;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.btn:hover {
+    background: #004c99;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 12px;
+    background: #003366;
+    color: white;
+    margin-top: 20px;
+}

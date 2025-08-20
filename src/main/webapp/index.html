@@ -1,26 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Ski Instructors Georgia</title>
+    <link rel="stylesheet" href="styles/welcomePage.css">
 </head>
 <body>
 <header>
     <h1>Ski & Snowboard Instructors in Gudauri and Bakuriani</h1>
-    <p>Find trusted instructors or join as one.</p>
 </header>
 
 <main>
-    <section style="border:1px solid #ccc; padding:20px; margin:20px;">
-        <h2>For Tourists & Skiers</h2>
-        <p>Browse local ski & snowboard instructors, read reviews, and contact them directly.</p>
-        <a href="/browseInstructors.html"><button>Find an Instructor</button></a>
-    </section>
+    <div class="content">
+        <!-- Left side: image -->
+        <div class="image-container">
+            <img src="https://www.snowskool.com/uploads/images/Snowboarding_and_Skiing%2C_Featured_Image.jpg" alt="Skiing in Georgia">
+        </div>
 
-    <section style="border:1px solid #ccc; padding:20px; margin:20px;">
-        <h2>For Instructors</h2>
-        <p>Create your profile, share your experience, and get bookings from tourists.</p>
-        <a href="/LoginInstructor"><button>Enter as an Instructor</button></a>
-    </section>
+        <!-- Right side: stacked cards -->
+        <div class="card-container">
+            <section class="card">
+                <h2>For Tourists & Skiers</h2>
+                <p>Browse local ski & snowboard instructors, read reviews, and contact them directly.</p>
+                <a href="/browseInstructors.html" class="btn">Find an Instructor</a>
+            </section>
+
+            <section class="card">
+                <h2>For Instructors</h2>
+                <p>Create your profile, share your experience, and get bookings from tourists.</p>
+                <a href="/LoginInstructor" class="btn">Enter as an Instructor</a>
+            </section>
+        </div>
+    </div>
 </main>
 
 <footer>
@@ -28,5 +39,3 @@
 </footer>
 </body>
 </html>
-
-
