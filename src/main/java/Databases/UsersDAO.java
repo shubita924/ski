@@ -1,6 +1,7 @@
 package Databases;
 
 import Objects.User;
+import utils.PasswordHasher;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -121,5 +122,23 @@ public class UsersDAO {
         }
         return users;
     }
+
+    // In UsersDAO
+    public User validateUser(String email, String password) {
+        User user = getUserByEmail(email);
+        if (user == null) {
+            return null; // not found
+        }
+
+        // Verify password
+        PasswordHasher hasher = new PasswordHasher();
+
+        if (hasher.verifyPassword(password, user.getSalt(), user.getPasswordHash())) {
+            return user; // valid login
+        } else {
+            return null; // wrong password
+        }
+    }
+
 
 }

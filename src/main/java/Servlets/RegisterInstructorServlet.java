@@ -56,7 +56,7 @@ public class RegisterInstructorServlet extends HttpServlet {
 
 
         // Create new user
-        User newUser = new User(email, fullname, salt, hashedPassword, role, phone);
+        User newUser = new User(email, fullname, salt, hashedPassword, "Instructor", phone);
 
         dao.addUser(newUser);
 
