@@ -1,3 +1,3 @@
 package Objects;
 
-public enum Role { USER, INSTRUCTOR }
+public enum Role { STUDENT, INSTRUCTOR }

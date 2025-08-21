@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Browse Instructors</title>
+    <link rel="stylesheet" href="styles/instructorList.css">
+
+
+</head>
+<body>
+<h1>Instructors</h1>
+<div class="container" id="instructorList"></div>
+
+<script>
+    async function loadInstructors() {
+        try {
+            const response = await fetch("BrowseInstructors");
+            const instructors = await response.json();
+
+            const list = document.getElementById("instructorList");
+            list.innerHTML = "";
+
+            if (instructors.length === 0) {
+                list.innerHTML = "<p class='no-data'>No instructors found.</p>";
+            } else {
+                instructors.forEach(inst => {
+                    const card = document.createElement("div");
+                    card.className = "card";
+                    card.innerHTML = `
+                        <div class="name">${inst.fullname}</div>
+                        <div class="email">${inst.email}</div>
+                    `;
+                    list.appendChild(card);
+                });
+            }
+        } catch (err) {
+            console.error("Error loading instructors:", err);
+        }
+    }
+
+    // load on page load
+    window.onload = loadInstructors;
+</script>
+</body>
+</html>

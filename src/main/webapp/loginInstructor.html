@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Instructor</title>
+</head>
+<body>
+<main>
+    <h2>Instructor Login</h2>
+
+    <form id="loginForm">
+        <div id="loginError" style="color:red;"></div>
+        Email: <input type="text" name="email" required><br><br>
+        Password: <input type="password" name="password" required><br><br>
+        <button type="submit">Login</button>
+        <br><br>
+        <a href="/registerInstructor">Register if you do not have an account</a>
+    </form>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const body = new URLSearchParams(formData);
+
+            const res = await fetch("/LoginInstructor", {
+                method: "POST",
+                body: body
+            });
+
+            const errorDiv = document.getElementById("loginError");
+
+            if (res.status === 200) {
+                const data = await res.json();
+                window.location.href = data.redirect; // Redirect on success
+            } else {
+                const data = await res.json();
+                errorDiv.textContent = data.error || "Invalid login credentials.";
+            }
+        });
+    </script>
+</main>
+</body>
+</html>
